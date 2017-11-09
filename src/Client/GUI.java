@@ -118,9 +118,7 @@ public class GUI extends JFrame {
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 790, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(161, Short.MAX_VALUE))
+				.addComponent(textField, GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE)
 		);
 		gl_panel_3.setVerticalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
@@ -168,6 +166,7 @@ public class GUI extends JFrame {
 		panel_2.add(scrollPane, "name_11251817015348");
 		
 		textArea = new JTextArea();
+		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
@@ -190,7 +189,7 @@ public class GUI extends JFrame {
 		
 		//cherche la bonne methode dans l'interface
 		Method methodCall = null;
-		for (Method method : ModelListener.class.getMethods()){
+		for (Method method : ViewListener.class.getMethods()){
 			//System.out.println("ModelListener::" + method.getName());
 			if (methodName.equals(method.getName())){
 				methodCall = method;
@@ -204,7 +203,7 @@ public class GUI extends JFrame {
 		
 		for(ViewListener listener : this.listeners){
 			try {
-				methodCall.invoke(listeners, args);
+				methodCall.invoke(listener, args);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
