@@ -44,7 +44,10 @@ public class Server implements Runnable{
 				//Arrive ici, cela signifie q'une connexion a ete recu sur le port du serveur
 				System.out.println("[SERVER] Connection received from "+s.getInetAddress());
 				//creer un objet pour representer le client
-				Client c = new Client(s);
+				Client c = new Client(this, s);
+				
+				//On lance le thread qui se charge de lire 
+				c.startPollingThread();
 				this.connectedClient.add(c);
 				
 				
@@ -55,5 +58,14 @@ public class Server implements Runnable{
 		}		
 	}
 	
+	public void onMessageReceived(Client client, String message){
+		System.out.println("[SERVER][" + client.getSocket().getInetAddress() + "] Received message "+ message);
+	}
+	
+	public void onClientDisconnected(Client client){
+		//log
+		System.out.println("[SERVER][ " + client.getSocket().getInetAddress()+"] Client has just been disconnected");
+		
+	}
 	
 }
